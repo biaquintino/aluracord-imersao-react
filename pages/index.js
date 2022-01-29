@@ -10,7 +10,7 @@ function Titulo(props) {
       <Tag>{props.children}</Tag>
       <style jsx>{`
             ${Tag} {
-                color: ${appConfig.theme.colors.neutrals['000']};
+                color: '#210b0d';
                 font-size: 25px;
                 font-weight: 600;
             }
@@ -30,7 +30,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary['000'],
-          backgroundImage: 'url(https://www.mundojs.com.br/wp-content/uploads/2019/08/react1.jpg)',
+          backgroundImage: 'url(background.png)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -44,9 +44,9 @@ export default function PaginaInicial() {
               sm: 'row',
             },
             width: '100%', maxWidth: '700px',
-            borderRadius: '5px', padding: '33px', margin: '16px',
+            borderRadius: '10px', padding: '35px', margin: '16px',
             boxShadow: '0 5px 10px 0 rgb(0 0 0 / 50%)',
-            backgroundColor: appConfig.theme.colors.neutrals[600],
+            backgroundColor: 'rgb(233,37,65 ,0.70)',
           }}
         >
           {/* Formulário */}
@@ -64,7 +64,7 @@ export default function PaginaInicial() {
             }}
           >
             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: '#210b0d'}}>
               {appConfig.name}
             </Text>
 
@@ -81,10 +81,10 @@ export default function PaginaInicial() {
               fullWidth
               textFieldColors={{
                 neutral: {
-                  textColor: appConfig.theme.colors.neutrals[300],
-                  mainColor: appConfig.theme.colors.neutrals[500],
-                  mainColorHighlight: appConfig.theme.colors.neutrals[900],
-                  backgroundColor: appConfig.theme.colors.neutrals[700],
+                  textColor: appConfig.theme.colors.neutrals[600],
+                  mainColor: appConfig.theme.colors.neutrals[300],
+                  mainColorHighlight: appConfig.theme.colors.neutrals[400],
+                  backgroundColor: 'rbga(230,230,228)',
                 },
               }}
             />
@@ -92,11 +92,13 @@ export default function PaginaInicial() {
               type='submit'
               label='Entrar'
               fullWidth
-              buttonColors={{
-                contrastColor: appConfig.theme.colors.neutrals[100],
-                mainColor: appConfig.theme.colors.primary['050'],
-                mainColorLight: appConfig.theme.colors.primary[600],
-                mainColorStrong: appConfig.theme.colors.neutrals[900],
+              styleSheet={{
+                color: '#210b0d', 
+                backgroundColor: '#e6e6e4',
+                hover: {
+                  backgroundColor: '#210b0d',
+                  color: '#e6e6e4'
+                }
               }}
             />
           </Box>
@@ -109,11 +111,11 @@ export default function PaginaInicial() {
               flexDirection: 'column',
               alignItems: 'center',
               maxWidth: '200px',
-              padding: '16px',
-              backgroundColor: appConfig.theme.colors.neutrals[500],
-              border: '1px solid',
-              borderColor: appConfig.theme.colors.neutrals[500],
-              borderRadius: '10px',
+              padding: '5px',
+              //backgroundColor: appConfig.theme.colors.neutrals[500],
+              //border: '1px solid',
+              //borderColor: appConfig.theme.colors.neutrals[500],
+              borderRadius: '15px',
               flex: 1,
               minHeight: '240px',
             }}
@@ -128,8 +130,10 @@ export default function PaginaInicial() {
             <Text
               variant="body4"
               styleSheet={{
-                color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[700],
+                color: '#210b0d',
+                fontSize: '1rem',
+      
+                //backgroundColor: "#222129",
                 padding: '3px 10px',
                 borderRadius: '1000px'
               }}

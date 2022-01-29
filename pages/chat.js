@@ -1,32 +1,91 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
 import React from "react";
 import appConfig from "../config.json";
+import { useRouter } from "next/router";
+//import { ButtonSendSticker } from "../src/components/ButtonSendSticker";
+//import { createClient } from '@supabase/supabase-js';
+
+//para ter acesso ao supabase
+//const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwODE4NCwiZXhwIjoxOTU4ODg0MTg0fQ.jI2kZFcGXBK0Sjr3xZBC-B1xEvmLXbujnAvdY9pZBV0'
+//const SUPABASE_URL = 'https://elzvtudiszkgkeqgmzqe.supabase.co';
+//const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+{/*function escutaMensagensEmTempoReal(adicionaMensagem) {
+  return supabaseClient
+    .from('mensagens')
+    .on('INSERT', (respostaLive) => {
+      adicionaMensagem(respostaLive.new);
+    })
+    .subscribe();
+}*/}
 
 export default function ChatPage() {
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username;
   const [mensagem, setMensagem] = React.useState("");
   const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
+  
+  {/*React.useEffect(() => {
+    supabaseClient
+      .from('mensagens')
+      .select('*')
+      .order('id', { ascending: false })
+      .then(({ data }) => {
+        //console.log('Dados da consulta:', data);
+        setListaDeMensagens(data);
+      });
+      
+  }, []);*/}
 
-  /*
-        Usuário:
-        -Usuário digita no campo textarea
-        -Aperta enter para enviar
-        -Tem que adicionar o texto na listagem
+ {/* const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
+    console.log('Nova mensagem:', novaMensagem);
+    console.log('listaDeMensagens:', listaDeMensagens);
+    // Quero reusar um valor de referencia (objeto/array) 
+    // Passar uma função pro setState
+    setListaDeMensagens((valorAtualDaLista) => {
+      console.log('valorAtualDaLista:', valorAtualDaLista);
+      return [
+        novaMensagem,
+        ...valorAtualDaLista,
+      ]
+    });
+  });
 
-        Dev:
-        - (x) Campo criado
-        - () Vamos usar o onChange, usa o useState (ter if para caso seja enter pra limpar a variavel)
-        - () Lista de mensagens
-     */
+  return () => {
+    subscription.unsubscribe();
+  }, [];*/}
+
+  
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
       id: listaDeMensagens.length + 1,
-      de: "biaquintino",
+      de: 'biaquintino',
       texto: novaMensagem,
     };
 
-    setListaDeMensagens([mensagem, ...listaDeMensagens]);
+    
+    setMensagem('');
+    setListaDeMensagens([
+        mensagem, 
+        ...listaDeMensagens]);
     setMensagem("");
-  }
+
+}
+
+     {/*supabaseClient
+      .from('mensagens')
+      .insert([
+        // Tem que ser um objeto com os MESMOS CAMPOS que você escreveu no supabase
+        mensagem
+      ])
+      .then(({ data }) => {
+        //console.log('Criando mensagem: ', data);
+        setListaDeMensagens([
+          data[0],
+          ...listaDeMensagens,
+        ]);
+      });
+  }*/}
 
   return (
     <Box
@@ -35,7 +94,7 @@ export default function ChatPage() {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: appConfig.theme.colors.primary['000'],
-        backgroundImage: `url(https://www.mundojs.com.br/wp-content/uploads/2019/08/react1.jpg)`,
+        backgroundImage: `url(background.png)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundBlendMode: "multiply",
@@ -47,9 +106,9 @@ export default function ChatPage() {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
-          borderRadius: "5px",
-          backgroundColor: appConfig.theme.colors.neutrals[600],
+          boxShadow: "0 5px 10px 0 rgb(0 0 0 / 20%)",
+          borderRadius: "20px",
+          backgroundColor: 'rgba(233,37,65 ,0.7)',
           height: "100%",
           maxWidth: "90%",
           maxHeight: "95vh",
@@ -63,20 +122,14 @@ export default function ChatPage() {
             display: "flex",
             flex: 1,
             height: "80%",
-            backgroundColor: appConfig.theme.colors.neutrals[500],
+            backgroundColor: 'rgba(233,37,65 ,0.8)',
             flexDirection: "column",
             borderRadius: "5px",
             padding: "16px",
           }}
         >
-          <MessageList mensagens={listaDeMensagens} />
-          {/* {listaDeMensagens.map((mensagemAtual) => {
-                    return (
-                        <li key={mensagemAtual.id}>
-                            {mensagemAtual.de}: {mensagemAtual.texto}
-                        </li>
-                    )
-            })} */}
+          <MessageList mensagens={listaDeMensagens} setListaDeMensagens={setListaDeMensagens}/>
+          
           <Box
             as="form"
             styleSheet={{
@@ -104,11 +157,18 @@ export default function ChatPage() {
                 resize: "none",
                 borderRadius: "5px",
                 padding: "6px 8px",
-                backgroundColor: appConfig.theme.colors.neutrals[700],
+                backgroundColor: 'rgb(230,230,228, 0.7)',
                 marginRight: "12px",
-                color: appConfig.theme.colors.neutrals[200],
+                color: appConfig.theme.colors.neutrals[600],
               }}
             />
+            {/*CallBack */}
+            {/*<ButtonSendSticker 
+              onStickerClick={(sticker) => {
+                // console.log('[USANDO O COMPONENTE] Salva esse sticker no banco', sticker);
+                handleNovaMensagem(':sticker: ' + sticker);
+              }}
+            />*/}
           </Box>
         </Box>
       </Box>
@@ -129,12 +189,13 @@ function Header() {
           
         }}
       >
-        <Text variant="heading5">Chat</Text>
+        <Text variant="heading5" styleSheet={{color: '#210b0d', fontSize: '20px'}}>Chat</Text>
         <Button
           variant="tertiary"
           colorVariant="neutral"
           label="Logout"
           href="/"
+          styleSheet={{color: '#210b0d'}}
         />
       </Box>
     </>
@@ -142,24 +203,27 @@ function Header() {
 }
 
 function MessageList(props) {
-  console.log(props);
+
+  // função para excluir mensagem enviada para o chat
+  function excluirMensagem(message) {
+    const mensagemExcluida = props.mensagens.filter(
+      (mensagem) => mensagem.id !== message
+    );
+    props.setListaDeMensagens([...mensagemExcluida]);
+  }
   return (
     <Box
       tag="ul"
       styleSheet={{
-        overflow: "none",
+        overflow: "auto",
         display: "flex",
         flexDirection: "column-reverse",
         flex: 1,
-        color: appConfig.theme.colors.neutrals["000"],
+        color: '#210b0d',
         marginBottom: "16px",
       }}
     >
       {props.mensagens.map((mensagem) => {
-          {/*const remove = (event) => {
-            event.preventDefault()
-            handleRemove(mensagem)
-          / */ }
         return (
           <Text
             key={mensagem.id}
@@ -169,7 +233,7 @@ function MessageList(props) {
               padding: "6px",
               marginBottom: "12px",
               hover: {
-                backgroundColor: appConfig.theme.colors.neutrals[700],
+                backgroundColor: 'rgb(230,230,228, 0.5)',
               },
             }}
           >
@@ -186,7 +250,7 @@ function MessageList(props) {
                   display: "inline-block",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/biaquintino.png`}
+                src={`https://github.com/${mensagem.de}.png`}
               />
               <Text tag="strong">{mensagem.de}</Text>
               <Text
@@ -201,23 +265,39 @@ function MessageList(props) {
                  
               </Text>
                 <Button
+                    type="onClick"                
+                    onClick={(event) => {
+                      event.preventDefault();
+                      excluirMensagem(mensagem.id);
+                    }}
                     styleSheet={{
-                      backgroundColor: "none",
                       position: "right",
-                      marginLeft: "800px"
+                      marginLeft: "890px",
+                      backgroundColor: "#210b0d",
+                      borderRadius: "20px",
+                      fontSize: "5px"
                     }}
                     buttonColors={{
                       contrastColor: appConfig.theme.colors.neutrals[100],
                       mainColor: appConfig.theme.colors.primary['060'],
-                      mainColorStrong: appConfig.theme.colors.neutrals['060']
+                      mainColorStrong: appConfig.theme.colors.neutrals['060'],
+                      
                     }}
-                    //onClick={remove}
                     variant="tertiary"
-                    label="Excluir mensagem"
-                    href="/"
+                    label="x"
+                    href="/chat"
                 />
             </Box>
             {mensagem.texto}
+
+             
+            {/*mensagem.texto.startsWith(':sticker:')
+              ? (
+                <Image src={mensagem.texto.replace(':sticker:', '')} />
+              )
+              : (
+                mensagem.texto
+              )*/}
           </Text>
         );
       })}
